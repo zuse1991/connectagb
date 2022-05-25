@@ -1,0 +1,9 @@
+sign-in:
+  title: Olá! Muito bom ter você aqui!
+  sign-in-subtitle: Faça login para continuar
+  email: E-mail
+  password: Senha
+  sign-in-button: Entrar
+  new-account-subtitle: É nov@ por aqui? Toque no botão abaixo, crie uma conta e seja bem-vind@!
+  create-account-button: Criar conta
+  
