@@ -1,0 +1,1 @@
+class MissingUseCaseParameterException implements Exception {}
