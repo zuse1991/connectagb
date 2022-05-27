@@ -4,4 +4,5 @@ import 'package:flutter/material.dart';
 var appRoutes = <String, WidgetBuilder>{
   '/sign-in': (context) => SignInView(),
   '/sign-up': (context) => Container(),
+  '/feed': (context) => Container(),
 };

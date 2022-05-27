@@ -58,15 +58,16 @@ class SignInViewState extends ViewState<SignInView, SignInViewController> {
                         height: 6,
                       ),
                       TextFormField(
-                        controller: controller.passwordTextEditingController,
-                        decoration: InputDecoration(
-                          hintText: FlutterI18n.translate(
-                            context,
-                            'sign-in.password',
+                          controller: controller.passwordTextEditingController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: FlutterI18n.translate(
+                              context,
+                              'sign-in.password',
+                            ),
+                            border: const OutlineInputBorder(),
                           ),
-                          border: const OutlineInputBorder(),
-                        ),
-                      ),
+                          validator: controller.validatePassword),
                     ],
                   ),
                 )),
