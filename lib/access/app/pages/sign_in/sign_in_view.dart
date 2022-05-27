@@ -39,29 +39,35 @@ class SignInViewState extends ViewState<SignInView, SignInViewController> {
             ),
           ),
           ControlledWidgetBuilder<SignInViewController>(
-            builder: ((context, controller) => TextField(
-                  controller: controller.emailTextEditingController,
-                  decoration: InputDecoration(
-                    hintText: FlutterI18n.translate(
-                      context,
-                      'sign-in.email',
-                    ),
-                    border: const OutlineInputBorder(),
-                  ),
-                )),
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          ControlledWidgetBuilder<SignInViewController>(
-            builder: ((context, controller) => TextField(
-                  controller: controller.passwordTextEditingController,
-                  decoration: InputDecoration(
-                    hintText: FlutterI18n.translate(
-                      context,
-                      'sign-in.password',
-                    ),
-                    border: const OutlineInputBorder(),
+            builder: ((context, controller) => Form(
+                  key: controller.formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: controller.emailTextEditingController,
+                        decoration: InputDecoration(
+                          hintText: FlutterI18n.translate(
+                            context,
+                            'sign-in.email',
+                          ),
+                          border: const OutlineInputBorder(),
+                        ),
+                        validator: controller.validateEmail,
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      TextFormField(
+                        controller: controller.passwordTextEditingController,
+                        decoration: InputDecoration(
+                          hintText: FlutterI18n.translate(
+                            context,
+                            'sign-in.password',
+                          ),
+                          border: const OutlineInputBorder(),
+                        ),
+                      ),
+                    ],
                   ),
                 )),
           ),

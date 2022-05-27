@@ -6,4 +6,7 @@ sign-in:
   sign-in-button: Entrar
   new-account-subtitle: É nov@ por aqui? Toque no botão abaixo, crie uma conta e seja bem-vind@!
   create-account-button: Criar conta
+  errors:
+    invalid_password: A senha deve possuir no mínimo 6 caracteres
+    invalid_email: Formato do email inválido
   
