@@ -5,6 +5,6 @@ class UnrecognizedNetworkException implements TranslatableException {
   UnrecognizedNetworkException({required this.response});
 
   @override
-  String get translationPath => '';
+  String get translationPath => 'errors.unrecognized-network-exception';
   Response? response;
 }

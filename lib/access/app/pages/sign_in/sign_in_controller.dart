@@ -10,27 +10,28 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 class SignInViewController extends Controller
     with EmailValitionMixin, PasswordValidatorMixin {
   SignInViewController()
-      : presenter = SignInViewPresenter(authRepository: AuthRepository()),
+      : _presenter = SignInViewPresenter(authRepository: AuthRepository()),
         emailTextEditingController = TextEditingController(),
         passwordTextEditingController = TextEditingController(),
         formKey = GlobalKey<FormState>();
 
   final TextEditingController emailTextEditingController;
   final TextEditingController passwordTextEditingController;
-  final SignInViewPresenter presenter;
   final GlobalKey<FormState> formKey;
   bool isLoading = false;
 
+  final SignInViewPresenter _presenter;
+
   @override
   void initListeners() {
-    presenter.onAuthComplete = onAuthComplete;
-    presenter.onAuthData = onAuthData;
-    presenter.onAuthException = onAuthException;
+    _presenter.onAuthComplete = onAuthComplete;
+    _presenter.onAuthData = onAuthData;
+    _presenter.onAuthException = onAuthException;
   }
 
   @override
   void onDisposed() {
-    presenter.dispose();
+    _presenter.dispose();
     super.onDisposed();
   }
 
@@ -42,7 +43,7 @@ class SignInViewController extends Controller
     if (formKey.currentState?.validate() == true) {
       _showLoading();
 
-      presenter.authenticate(
+      _presenter.authenticate(
         emailTextEditingController.text,
         passwordTextEditingController.text,
       );

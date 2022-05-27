@@ -6,5 +6,5 @@ class UnrecognizedUseCaseException implements TranslatableException {
   dynamic exception;
 
   @override
-  String get translationPath => '';
+  String get translationPath => 'errors.unrecognized-usecase-exception';
 }
