@@ -12,8 +12,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class UserAuthUseCase extends UseCase<User, UserAuthParams> {
-  UserAuthUseCase(this.authRepository);
-  IAuthRepository authRepository;
+  UserAuthUseCase(this._authRepository);
+  final IAuthRepository _authRepository;
 
   @override
   Future<Stream<User?>> buildUseCaseStream(UserAuthParams? params) async {
@@ -21,7 +21,7 @@ class UserAuthUseCase extends UseCase<User, UserAuthParams> {
 
     if (params != null) {
       try {
-        final response = await authRepository.authenticate(
+        final response = await _authRepository.authenticate(
           email: params.email,
           passwordHash: params.password,
         );
@@ -42,7 +42,7 @@ class UserAuthUseCase extends UseCase<User, UserAuthParams> {
               .addError(UnrecognizedNetworkException(response: e.response));
         }
       } catch (e) {
-        controller.addError(e);
+        controller.addError(UnrecognizedUseCaseException(exception: e));
       }
     } else {
       controller.addError(MissingUseCaseParameterException());
