@@ -1,12 +1,14 @@
-import 'package:conecta_gb/access/domain/entities/user.dart';
-import 'package:conecta_gb/news/domain/models/institutional_message.dart';
+import 'package:conecta_gb/news/domain/models/short_user.dart';
 
-class Post extends InstitutionalMessage {
-  factory Post.fromMap(Map data) {
-    return InstitutionalMessage.fromMap(data) as Post;
-  }
+class Post {
+  Post._();
 
-  bool isUserMessage(User compareUser) {
-    return compareUser.email == user.email;
-  }
+  factory Post.fromMap(Map data) => Post._()
+    ..user = ShortUser.fromMap(data['user'])
+    ..content = data['message']['content']
+    ..createdAt = DateTime.parse(data['message']['created_at']).toLocal();
+
+  late String content;
+  late DateTime createdAt;
+  late ShortUser user;
 }

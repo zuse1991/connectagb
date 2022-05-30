@@ -3,6 +3,7 @@ import 'package:conecta_gb/news/app/pages/feed/observers/fetch_posts_observer.da
 import 'package:conecta_gb/news/app/pages/feed/observers/institutional_news_observer.dart';
 import 'package:conecta_gb/news/app/pages/feed/observers/listen_new_posts_observer.dart';
 import 'package:conecta_gb/news/app/pages/feed/observers/send_post_observer.dart';
+import 'package:conecta_gb/news/domain/models/institutional_message.dart';
 import 'package:conecta_gb/news/domain/models/post.dart';
 import 'package:conecta_gb/news/domain/repositories/posts_repository.dart';
 import 'package:conecta_gb/news/domain/usecases/fetch_posts_usecase.dart';
@@ -25,7 +26,7 @@ class FeedViewPresenter extends Presenter {
   final ListenNewPostsUseCase _listenNewPostsUseCase;
 
   Function()? institutionalNewsOnComplete;
-  void Function(List<Post>)? institutionalNewsOnData;
+  void Function(List<InstitutionalMessage>)? institutionalNewsOnData;
   void Function(dynamic)? institutionalNewsOnError;
 
   Function()? fetchPostsOnComplete;
@@ -33,7 +34,6 @@ class FeedViewPresenter extends Presenter {
   void Function(dynamic)? fetchPostsOnError;
 
   Function()? sendPostOnComplete;
-  void Function(List<Post>)? sendPostOnData;
   void Function(dynamic)? sendPostOnError;
 
   Function()? listenNewPostsOnComplete;

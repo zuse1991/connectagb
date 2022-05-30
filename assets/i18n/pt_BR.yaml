@@ -13,6 +13,12 @@ sign-in:
       title: Atenção!
       message: Usuário ou senha inválidos
 
+feed:
+  title: Novidades
+  welcome: Olá {user}!
+  new-post: Novo post
+  no-posts-to-display: Sem posts para exibir no momento.
+
 errors:
   unrecognized-network-exception:
     title: Oops!

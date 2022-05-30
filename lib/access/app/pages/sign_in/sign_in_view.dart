@@ -45,6 +45,7 @@ class SignInViewState extends ViewState<SignInView, SignInViewController> {
                     children: [
                       TextFormField(
                         controller: controller.emailTextEditingController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: FlutterI18n.translate(
                             context,

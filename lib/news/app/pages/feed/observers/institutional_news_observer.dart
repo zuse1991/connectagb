@@ -1,8 +1,8 @@
 import 'package:conecta_gb/news/app/pages/feed/feed_presenter.dart';
+import 'package:conecta_gb/news/domain/models/institutional_message.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:conecta_gb/news/domain/models/post.dart';
 
-class InstitutionalNewsObserver extends Observer<List<Post>> {
+class InstitutionalNewsObserver extends Observer<List<InstitutionalMessage>> {
   InstitutionalNewsObserver(this._presenter);
 
   final FeedViewPresenter _presenter;
@@ -20,7 +20,7 @@ class InstitutionalNewsObserver extends Observer<List<Post>> {
   }
 
   @override
-  void onNext(List<Post>? response) {
+  void onNext(List<InstitutionalMessage>? response) {
     assert(_presenter.institutionalNewsOnData != null);
     _presenter.institutionalNewsOnData?.call(response!);
   }
