@@ -1,8 +1,12 @@
 import 'package:conecta_gb/access/domain/entities/user.dart';
+import 'package:conecta_gb/news/domain/models/institutional_message.dart';
 
-class Post {
-  Post(this.user, this.message);
+class Post extends InstitutionalMessage {
+  factory Post.fromMap(Map data) {
+    return InstitutionalMessage.fromMap(data) as Post;
+  }
 
-  final User user;
-  final String message;
+  bool isUserMessage(User compareUser) {
+    return compareUser.email == user.email;
+  }
 }

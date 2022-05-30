@@ -1,6 +1,5 @@
 import 'package:conecta_gb/commom/exceptions/unrecognized_network_exception.dart';
 import 'package:conecta_gb/news/domain/models/institutional_message.dart';
-import 'package:conecta_gb/news/domain/repositories/posts_repository.dart';
 import 'package:conecta_gb/news/domain/usecases/get_institutional_news_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 

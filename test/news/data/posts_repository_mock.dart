@@ -1,7 +1,8 @@
 import 'package:conecta_gb/news/domain/repositories/posts_repository.dart';
 import 'package:dio/dio.dart';
+import 'package:mockito/mockito.dart';
 
-class PostsRepositoryMock implements IPostsRepository {
+class PostsRepositoryMock with Mock implements IPostsRepository {
   bool failTest = false;
 
   @override

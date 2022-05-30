@@ -13,9 +13,11 @@ class FetchPostsUseCase extends UseCase<List<Post>, void> {
     final controller = StreamController<List<Post>>();
 
     final response = await _postsRepository.fetch();
-    final data = response.data as List;
+    final data =
+        (response.data as List).map<Post>((element) => Post.fromMap(element));
 
-    for (Map map in data) {}
+    controller.add(data.toList());
+    controller.close();
 
     return controller.stream;
   }

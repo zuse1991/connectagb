@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:html';
 import 'dart:math';
 
-import 'package:conecta_gb/news/domain/models/post.dart';
 import 'package:conecta_gb/news/domain/repositories/posts_repository.dart';
 import 'package:dio/dio.dart';
 
