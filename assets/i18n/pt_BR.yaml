@@ -18,6 +18,9 @@ feed:
   welcome: Olá {user}!
   new-post: Novo post
   no-posts-to-display: Sem posts para exibir no momento.
+  tabs:
+    feed: Feed
+    news: Novidades
 
 errors:
   unrecognized-network-exception:

@@ -1,4 +1,5 @@
-import 'package:conecta_gb/access/app/widgets/post_widget.dart';
+import 'package:conecta_gb/news/app/widgets/news_widget.dart';
+import 'package:conecta_gb/news/app/widgets/post_widget.dart';
 import 'package:conecta_gb/access/domain/entities/user.dart';
 import 'package:conecta_gb/news/app/pages/feed/feed_controller.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +13,32 @@ class FeedView extends View {
   State<StatefulWidget> createState() => FeedViewState();
 }
 
-class FeedViewState extends ViewState<View, FeedViewController> {
+class FeedViewState extends ViewState<View, FeedViewController>
+    with SingleTickerProviderStateMixin {
   FeedViewState() : super(FeedViewController());
 
+  List<Widget>? tabs;
+
   User? user;
+  TabController? tabController;
 
   @override
   Widget get view {
+    tabs ??= [
+      Tab(
+        text: FlutterI18n.translate(context, 'feed.tabs.feed'),
+        icon: const Icon(Icons.feed),
+      ),
+      Tab(
+        text: FlutterI18n.translate(context, 'feed.tabs.news'),
+        icon: const Icon(Icons.newspaper),
+      ),
+    ];
+
+    tabController ??= TabController(
+      length: tabs!.length,
+      vsync: this,
+    );
     user ??= ModalRoute.of(context)!.settings.arguments as User;
 
     return Scaffold(
@@ -27,12 +47,26 @@ class FeedViewState extends ViewState<View, FeedViewController> {
         title: I18nText('feed.title'),
       ),
       body: body,
+      bottomNavigationBar: TabBar(
+        controller: tabController,
+        tabs: tabs!,
+      ),
     );
   }
 
-  Widget get body => Column(
+  Widget get body => TabBarView(
+        controller: tabController,
+        children: [feedTab, newsTab],
+      );
+
+  Widget get feedTab => Column(
         mainAxisSize: MainAxisSize.max,
         children: [headerRow, postsList],
+      );
+
+  Widget get newsTab => Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [newsList],
       );
 
   Widget get headerRow => Row(
@@ -74,4 +108,30 @@ class FeedViewState extends ViewState<View, FeedViewController> {
                 )),
         ),
       );
+
+  Widget get newsList => Expanded(
+        child: ControlledWidgetBuilder<FeedViewController>(
+          builder: ((context, controller) => controller.feedPosts != null &&
+                  controller.feedPosts!.isNotEmpty
+              ? ListView.builder(
+                  itemCount: controller.feedPosts?.length ?? 0,
+                  itemBuilder: ((context, index) {
+                    final post =
+                        controller.institutionalPosts!.elementAt(index);
+                    return InstitutionalNewsWidget(post);
+                  }),
+                )
+              : Center(
+                  child: Text(
+                    FlutterI18n.translate(context, 'feed.no-posts-to-display'),
+                  ),
+                )),
+        ),
+      );
+
+  @override
+  void dispose() {
+    tabController?.dispose();
+    super.dispose();
+  }
 }
