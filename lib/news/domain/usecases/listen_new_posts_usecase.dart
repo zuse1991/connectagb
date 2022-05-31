@@ -9,11 +9,10 @@ class ListenNewPostsUseCase extends UseCase<Post, void> {
 
   final IPostsRepository _postsRepository;
   StreamSubscription? _subscription;
+  StreamController<Post> controller = StreamController<Post>();
 
   @override
   Future<Stream<Post?>> buildUseCaseStream(void params) async {
-    StreamController<Post> controller = StreamController<Post>();
-
     _subscription = (await _postsRepository.listenNewPosts()).listen((event) {
       controller.add(Post.fromMap(event));
     });
@@ -24,6 +23,7 @@ class ListenNewPostsUseCase extends UseCase<Post, void> {
   @override
   void dispose() {
     _subscription?.cancel();
+    controller.close();
     super.dispose();
   }
 }

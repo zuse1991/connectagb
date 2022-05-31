@@ -14,7 +14,7 @@ sign-in:
       message: Usuário ou senha inválidos
 
 feed:
-  title: Novidades
+  title: Connecta GB
   welcome: Olá {user}!
   new-post: Novo post
   no-posts-to-display: Sem posts para exibir no momento.

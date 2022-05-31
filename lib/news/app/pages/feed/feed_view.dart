@@ -1,7 +1,6 @@
 import 'package:conecta_gb/news/app/widgets/new_post_field_widget.dart';
 import 'package:conecta_gb/news/app/widgets/news_widget.dart';
 import 'package:conecta_gb/news/app/widgets/post_widget.dart';
-import 'package:conecta_gb/access/domain/entities/user.dart';
 import 'package:conecta_gb/news/app/pages/feed/feed_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,6 +59,8 @@ class FeedViewState extends ViewState<View, FeedViewController>
       bottomNavigationBar: TabBar(
         controller: tabController,
         tabs: tabs!,
+        labelColor: Theme.of(context).primaryColorDark,
+        unselectedLabelColor: Theme.of(context).primaryColor,
       ),
     );
   }
@@ -133,6 +134,7 @@ class FeedViewState extends ViewState<View, FeedViewController>
               return NewPostFieldWidget(
                 onCancel: controller.changeNewPostFieldVisibility,
                 onSend: controller.createNewPost,
+                initialValue: controller.editingPost?.content,
               );
             }),
           )
@@ -148,7 +150,14 @@ class FeedViewState extends ViewState<View, FeedViewController>
                     itemCount: controller.feedPosts?.length ?? 0,
                     itemBuilder: ((context, index) {
                       final post = controller.feedPosts!.elementAt(index);
-                      return PostWidget(post);
+                      return PostWidget(
+                        post,
+                        enableUserActions: post.isUserPostAuthor(
+                          controller.user,
+                        ),
+                        onDelete: controller.onDeletePost,
+                        onEdit: controller.onEditPost,
+                      );
                     }),
                   ),
                   onRefresh: () async => controller.refreshPosts(),

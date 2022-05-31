@@ -8,6 +8,7 @@ class PostsRepository extends IPostsRepository {
   final _postsStreamController = StreamController<Map>();
   Timer? _postsTimer;
   final List<Map> _mockedPosts = [];
+  int _currentId = 0;
 
   final _usersTemplate = [
     {
@@ -77,6 +78,7 @@ class PostsRepository extends IPostsRepository {
 
   @override
   Future<Response> create(Map post) async {
+    post['id'] = ++_currentId;
     post['message']['created_at'] = DateTime.now().toUtc().toIso8601String();
 
     _addToMock(post);
@@ -109,8 +111,8 @@ class PostsRepository extends IPostsRepository {
   void _initializeMockedPosts() {
     for (String element in _postsTemplate) {
       final random = Random().nextInt(_usersTemplate.length);
-
       _mockedPosts.add({
+        'id': ++_currentId,
         'user': _usersTemplate[random],
         'message': {
           'content': element,
@@ -126,6 +128,7 @@ class PostsRepository extends IPostsRepository {
         final userPosition = Random().nextInt(_usersTemplate.length);
 
         _addToMock({
+          'id': ++_currentId,
           'user': _usersTemplate[userPosition],
           'message': {
             'content': _postsTemplate[postPosition],
@@ -145,5 +148,24 @@ class PostsRepository extends IPostsRepository {
   void dispose() {
     _postsTimer?.cancel();
     _postsStreamController.close();
+  }
+
+  @override
+  Future<Response> update(int id, String newContent) async {
+    final index = _mockedPosts.indexWhere((element) => element['id'] == id);
+    _mockedPosts[index]['message']['content'] = newContent;
+
+    return Response(
+      requestOptions: RequestOptions(path: '/'),
+      statusCode: 200,
+      data: _mockedPosts[index],
+    );
+  }
+
+  @override
+  Future<Response> delete(int id) async {
+    _mockedPosts.removeWhere((element) => element['id'] == id);
+
+    return Response(requestOptions: RequestOptions(path: '/'), statusCode: 204);
   }
 }

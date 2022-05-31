@@ -1,6 +1,5 @@
 import 'package:conecta_gb/access/domain/entities/user.dart';
 import 'package:conecta_gb/news/app/pages/feed/feed_presenter.dart';
-import 'package:conecta_gb/news/app/pages/feed/feed_view.dart';
 import 'package:conecta_gb/news/data/repositories/posts_repository.dart';
 import 'package:conecta_gb/news/domain/models/institutional_message.dart';
 import 'package:conecta_gb/news/domain/models/post.dart';
@@ -13,6 +12,7 @@ class FeedViewController extends Controller {
   final FeedViewPresenter _presenter;
   List<InstitutionalMessage>? institutionalPosts;
   List<Post>? feedPosts;
+  Post? editingPost;
 
   bool newPostFieldIsDisplayed = false;
 
@@ -33,22 +33,40 @@ class FeedViewController extends Controller {
     _presenter.listenNewPostsOnData = listenNewPostsOnData;
     _presenter.listenNewPostsOnError = listenNewPostsOnError;
 
+    _presenter.updatePostOnComplete = updatePostOnComplete;
+    _presenter.updatePostOnError = updatePostOnError;
+
+    _presenter.deletePostOnComplete = deletePostOnComplete;
+    _presenter.deletePostOnError = deletePostOnError;
+
     _presenter.fetchInstitutionalNews();
     _presenter.fetchPosts();
+    _presenter.listenNewPosts();
   }
 
   User get user => ModalRoute.of(getContext())!.settings.arguments as User;
 
   void changeNewPostFieldVisibility() {
     newPostFieldIsDisplayed = !newPostFieldIsDisplayed;
+
+    if (!newPostFieldIsDisplayed) {
+      editingPost = null;
+    }
+
     refreshUI();
   }
 
   void createNewPost(String message) {
-    if (message.isNotEmpty) {
-      _presenter.sendPost(user, message);
+    if (message.isEmpty) {
+      changeNewPostFieldVisibility();
+      return;
     }
 
+    if (editingPost == null) {
+      _presenter.sendPost(user, message);
+    } else {
+      _presenter.updatePost(editingPost!, message);
+    }
     changeNewPostFieldVisibility();
   }
 
@@ -76,15 +94,36 @@ class FeedViewController extends Controller {
 
   void fetchPostsOnError(dynamic error) {}
 
-  void sendPostOnComplete() {
-    _presenter.fetchPosts();
-  }
+  void sendPostOnComplete() {}
 
   void sendPostOnError(dynamic error) {}
 
   void listenNewPostsOnComplete() {}
-  void listenNewPostsOnData(Post post) {}
+  void listenNewPostsOnData(Post post) {
+    feedPosts!.insert(0, post);
+    refreshUI();
+  }
+
   void listenNewPostsOnError(dynamic error) {}
+
+  void deletePostOnError(dynamic e) {}
+  void deletePostOnComplete() {
+    refreshPosts();
+  }
+
+  void updatePostOnError(dynamic e) {}
+  void updatePostOnComplete() {
+    refreshPosts();
+  }
+
+  void onDeletePost(Post post) {
+    _presenter.deletePost(post);
+  }
+
+  void onEditPost(Post post) {
+    editingPost = post;
+    changeNewPostFieldVisibility();
+  }
 
   @override
   void onDisposed() {
