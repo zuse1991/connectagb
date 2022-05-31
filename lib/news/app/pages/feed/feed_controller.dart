@@ -4,6 +4,7 @@ import 'package:conecta_gb/news/app/pages/feed/feed_view.dart';
 import 'package:conecta_gb/news/data/repositories/posts_repository.dart';
 import 'package:conecta_gb/news/domain/models/institutional_message.dart';
 import 'package:conecta_gb/news/domain/models/post.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class FeedViewController extends Controller {
@@ -12,6 +13,8 @@ class FeedViewController extends Controller {
   final FeedViewPresenter _presenter;
   List<InstitutionalMessage>? institutionalPosts;
   List<Post>? feedPosts;
+
+  bool newPostFieldIsDisplayed = false;
 
   @override
   void initListeners() {
@@ -34,9 +37,20 @@ class FeedViewController extends Controller {
     _presenter.fetchPosts();
   }
 
-  User? get user => (getState() as FeedViewState).user;
+  User get user => ModalRoute.of(getContext())!.settings.arguments as User;
 
-  void displayNewPostField() {}
+  void changeNewPostFieldVisibility() {
+    newPostFieldIsDisplayed = !newPostFieldIsDisplayed;
+    refreshUI();
+  }
+
+  void createNewPost(String message) {
+    if (message.isNotEmpty) {
+      _presenter.sendPost(user, message);
+    }
+
+    changeNewPostFieldVisibility();
+  }
 
   void institutionalNewsOnComplete() {}
   void institutionalNewsOnData(List<InstitutionalMessage> data) {
@@ -52,9 +66,20 @@ class FeedViewController extends Controller {
     refreshUI();
   }
 
+  void refreshPosts() {
+    _presenter.fetchPosts();
+  }
+
+  void refreshInstitutionalNews() {
+    _presenter.fetchInstitutionalNews();
+  }
+
   void fetchPostsOnError(dynamic error) {}
 
-  void sendPostOnComplete() {}
+  void sendPostOnComplete() {
+    _presenter.fetchPosts();
+  }
+
   void sendPostOnError(dynamic error) {}
 
   void listenNewPostsOnComplete() {}

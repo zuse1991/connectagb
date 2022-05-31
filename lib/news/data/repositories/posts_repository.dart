@@ -66,7 +66,7 @@ class PostsRepository extends IPostsRepository {
     'Ótimo esse novo produto! #amei',
     'Mais um recebido perfeito! #amo',
     'Chegou uma caixa recheada aqui! E já estou fechando outro pedido!! s2',
-    'Vocês viram o novo produto? Super aguardando mais detalhes sobre! #anciedade',
+    'Vocês viram o novo produto? Super aguardando mais detalhes sobre! #ansiedade',
     'Nossa, meus produtos chegaram em menos de uma semana! #impressionante',
   ];
 
@@ -120,7 +120,7 @@ class PostsRepository extends IPostsRepository {
     }
 
     _postsTimer = Timer.periodic(
-      const Duration(seconds: 5),
+      const Duration(minutes: 2),
       (timer) {
         final postPosition = Random().nextInt(_postsTemplate.length);
         final userPosition = Random().nextInt(_usersTemplate.length);
