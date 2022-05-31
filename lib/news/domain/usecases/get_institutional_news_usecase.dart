@@ -21,11 +21,15 @@ class GetInstitutionalNewsUseCase
     try {
       final response = await _postsRepository.getInstitutionalNews();
 
-      final data = (response.data['news'] as List).map<InstitutionalMessage>(
-        (current) => InstitutionalMessage.fromMap(current),
-      );
+      final data = (response.data['news'] as List)
+          .map<InstitutionalMessage>(
+            (current) => InstitutionalMessage.fromMap(current),
+          )
+          .toList();
 
-      controller.add(data.toList());
+      data.sort(((a, b) => b.createdAt.compareTo(a.createdAt)));
+
+      controller.add(data);
       controller.close();
     } on DioError catch (e) {
       controller.addError(UnrecognizedNetworkException(response: e.response));

@@ -13,10 +13,13 @@ class FetchPostsUseCase extends UseCase<List<Post>, void> {
     final controller = StreamController<List<Post>>();
 
     final response = await _postsRepository.fetch();
-    final data =
-        (response.data as List).map<Post>((element) => Post.fromMap(element));
+    final data = (response.data as List)
+        .map<Post>((element) => Post.fromMap(element))
+        .toList();
 
-    controller.add(data.toList());
+    data.sort(((a, b) => b.createdAt.compareTo(a.createdAt)));
+
+    controller.add(data);
     controller.close();
 
     return controller.stream;

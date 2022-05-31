@@ -4,7 +4,6 @@ import 'package:conecta_gb/news/app/pages/feed/feed_view.dart';
 import 'package:conecta_gb/news/data/repositories/posts_repository.dart';
 import 'package:conecta_gb/news/domain/models/institutional_message.dart';
 import 'package:conecta_gb/news/domain/models/post.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class FeedViewController extends Controller {
