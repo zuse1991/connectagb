@@ -14,6 +14,8 @@ class FeedViewController extends Controller {
   List<Post>? feedPosts;
   Post? editingPost;
 
+  dynamic institutionalNewsFetchException;
+
   bool newPostFieldIsDisplayed = false;
 
   @override
@@ -72,11 +74,16 @@ class FeedViewController extends Controller {
 
   void institutionalNewsOnComplete() {}
   void institutionalNewsOnData(List<InstitutionalMessage> data) {
+    institutionalNewsFetchException = null;
     institutionalPosts = data;
     refreshUI();
   }
 
-  void institutionalNewsOnError(dynamic error) {}
+  void institutionalNewsOnError(dynamic error) {
+    institutionalPosts?.clear();
+    institutionalNewsFetchException = error;
+    refreshUI();
+  }
 
   void fetchPostsOnComplete() {}
   void fetchPostsOnData(List<Post> data) {

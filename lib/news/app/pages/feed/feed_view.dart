@@ -1,3 +1,4 @@
+import 'package:conecta_gb/commom/exceptions/translatable_exception.dart';
 import 'package:conecta_gb/news/app/widgets/new_post_field_widget.dart';
 import 'package:conecta_gb/news/app/widgets/news_widget.dart';
 import 'package:conecta_gb/news/app/widgets/post_widget.dart';
@@ -43,13 +44,8 @@ class FeedViewState extends ViewState<View, FeedViewController>
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
-        title: Text(
-          FlutterI18n.translate(context, 'feed.title'),
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.apply(color: Theme.of(context).primaryColorLight),
-        ),
+        foregroundColor: Colors.white,
+        title: Text(FlutterI18n.translate(context, 'feed.title')),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
@@ -172,26 +168,84 @@ class FeedViewState extends ViewState<View, FeedViewController>
 
   Widget get newsList => Expanded(
         child: ControlledWidgetBuilder<FeedViewController>(
-          builder: ((context, controller) => controller.institutionalPosts !=
-                      null &&
-                  controller.institutionalPosts!.isNotEmpty
-              ? RefreshIndicator(
-                  child: ListView.builder(
-                    itemCount: controller.feedPosts?.length ?? 0,
-                    itemBuilder: ((context, index) {
-                      final post =
-                          controller.institutionalPosts!.elementAt(index);
-                      return InstitutionalNewsWidget(post);
-                    }),
+            builder: ((context, controller) {
+          if (controller.institutionalNewsFetchException != null) {
+            final exception = controller.institutionalNewsFetchException;
+            String translationPath = 'errors.unexpected-error';
+
+            if (exception is TranslatableException) {
+              translationPath = exception.translationPath;
+            }
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.error,
+                    color: Colors.red,
+                    size: 90,
                   ),
-                  onRefresh: () async => controller.refreshInstitutionalNews(),
-                )
-              : Center(
-                  child: Text(
-                    FlutterI18n.translate(context, 'feed.no-posts-to-display'),
+                  const SizedBox(height: 15),
+                  Text(
+                    FlutterI18n.translate(context, '$translationPath.title'),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                )),
-        ),
+                  const SizedBox(height: 15),
+                  Text(
+                    FlutterI18n.translate(context, '$translationPath.message'),
+                    style: Theme.of(context).textTheme.subtitle1,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 15),
+                  MaterialButton(
+                    color: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    splashColor: Theme.of(context).primaryColorDark,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 15,
+                    ),
+                    onPressed: controller.refreshInstitutionalNews,
+                    child: Text(
+                      FlutterI18n.translate(
+                        context,
+                        'buttons.try-again',
+                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          ?.apply(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+
+          if (controller.institutionalPosts == null ||
+              controller.institutionalPosts!.isEmpty) {
+            return Center(
+              child: Text(
+                FlutterI18n.translate(context, 'feed.no-posts-to-display'),
+              ),
+            );
+          }
+
+          return RefreshIndicator(
+            child: ListView.builder(
+              itemCount: controller.feedPosts?.length ?? 0,
+              itemBuilder: ((context, index) {
+                final post = controller.institutionalPosts!.elementAt(index);
+                return InstitutionalNewsWidget(post);
+              }),
+            ),
+            onRefresh: () async => controller.refreshInstitutionalNews(),
+          );
+        })),
       );
 
   @override

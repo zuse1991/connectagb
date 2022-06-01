@@ -38,6 +38,7 @@ feed:
 
 buttons:
   ok: OK
+  try-again: Tentar novamente
 
 errors:
   unexpected-error: 
@@ -47,10 +48,12 @@ errors:
     title: Oops!
     message: | 
       Não foi possível comunicar corretamente com o servidor nesse momento.
+
       Verifique sua conexão e tente novamente.
   unrecognized-usecase-exception:
     title: Oops!
     message: |
       Ocorreu um problema com os dados da aplicação.
+
       Tente novamente, caso continue enfrentando problemas entre em contato pelo canal de suporte.
   
