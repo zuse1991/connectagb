@@ -1,6 +1,7 @@
 import 'package:conecta_gb/access/app/pages/sign_in/sign_in_presenter.dart';
 import 'package:conecta_gb/access/data/repositories/auth_repository.dart';
 import 'package:conecta_gb/access/domain/entities/user.dart';
+import 'package:conecta_gb/commom/exceptions/translatable_exception.dart';
 import 'package:conecta_gb/commom/mixins/email_validator_mixin.dart';
 import 'package:conecta_gb/commom/mixins/password_validator_mixin.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,44 @@ class SignInViewController extends Controller
 
   void onAuthException(exception) {
     _hideLoading();
+
+    String translationPath = 'errors.unexpected-error';
+
+    if (exception is TranslatableException) {
+      translationPath = exception.translationPath;
+    }
+
+    final dialog = AlertDialog(
+      title: Text(
+        FlutterI18n.translate(
+          getContext(),
+          '$translationPath.title',
+        ),
+      ),
+      content: Text(
+        FlutterI18n.translate(
+          getContext(),
+          '$translationPath.message',
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: Navigator.of(getContext()).pop,
+          child: Text(
+            FlutterI18n.translate(
+              getContext(),
+              'buttons.ok',
+            ),
+          ),
+        )
+      ],
+    );
+
+    showDialog(
+      context: getContext(),
+      barrierDismissible: false,
+      builder: (context) => dialog,
+    );
   }
 
   String? validateEmail(String? value) {

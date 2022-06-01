@@ -38,7 +38,7 @@ class AuthRepository implements IAuthRepository {
             },
           },
         );
-      case '2bda2998d9b0ee197da142a0447f6725': //wrong
+      case 'eb083d51ef6548da4f45a83c18cf02b9': //invalida
         throw DioError(
           requestOptions: RequestOptions(
             path: '',

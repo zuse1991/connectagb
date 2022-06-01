@@ -97,7 +97,7 @@ class SignUpViewState extends ViewState<SignUpView, SignUpViewController> {
                     child: Text(
                       FlutterI18n.translate(
                         context,
-                        'sign-up.send-button',
+                        'buttons.ok',
                       ),
                       style: Theme.of(context)
                           .textTheme
