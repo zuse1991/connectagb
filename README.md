@@ -1,16 +1,30 @@
-# conecta_gb
+# Connecta GB
 
-A new Flutter project.
+Microblogging app for the communication of news and also the posting of personal updates.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run this project you need to have `Flutter 3.0.1` properly configured.
 
-A few resources to get you started if this is your first Flutter project:
+To get dependencies, run `flutter pub get` command in terminal at project folder.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Running Tests
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To run tests, run `flutter test` command in terminal at project folder.
+
+## Application Sign In mock data
+
+To simulate sign in responses, type any email address, and use passwords listed above to try different responses:
+* `grupoboticario`: success sign in and feed screen display
+* `invalida`: display wrong password message
+* any other: display network error message
+
+## Users post feed
+
+The users post feed simulate new posts at every 2 minutes, displaying it using stream emulating websocket realtime update.
+
+## Considerations
+
+In that week when I accept the test challenge all type of problems occures in my particular life. That's not my best UI implementation and is far of stay completly implemented. But I tried to deliver the scenarios working and with at least some complete treatments and some complete test scenarios for the flows.
+
+I apologize for not giving my best, but really a lot of weird things happened, from my son asking for my attention more than usual to food poisoning over the weekend that made my wife have to go to the hospital and didn't leave me very well.
