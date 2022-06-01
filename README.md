@@ -10,7 +10,7 @@ To get dependencies, run `flutter pub get` command in terminal at project folder
 
 ## Running Tests
 
-To run tests, run `flutter test` command in terminal at project folder.
+To run tests, first run `flutter pub run build_runner build --delete-conflicting-outputs` and after run `flutter test` command in terminal at project folder.
 
 ## Application Sign In mock data
 

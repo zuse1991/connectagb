@@ -28,7 +28,7 @@ sign-up:
     message: Cadastro enviado com sucesso! Siga as etapas no seu email para concluir o cadastro.
 
 feed:
-  title: Connecta GB
+  title: Conecta GB
   welcome: Olá {user}!
   new-post: Novo post
   no-posts-to-display: Sem posts para exibir no momento.
