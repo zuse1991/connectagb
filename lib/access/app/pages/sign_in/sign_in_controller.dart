@@ -8,7 +8,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class SignInViewController extends Controller
-    with EmailValitionMixin, PasswordValidatorMixin {
+    with EmailValidatorMixin, PasswordValidatorMixin {
   SignInViewController()
       : _presenter = SignInViewPresenter(authRepository: AuthRepository()),
         emailTextEditingController = TextEditingController(),

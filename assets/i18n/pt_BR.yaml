@@ -13,6 +13,21 @@ sign-in:
       title: Atenção!
       message: Usuário ou senha inválidos
 
+sign-up:
+  title: Criar conta
+  description: "Criar uma nova conta é rápido e fácil. Para começar, preencha os campos abaixo:"
+  name-field: Nome Completo
+  email-field: E-mail
+  password-field: Senha
+  send-button: Enviar
+  errors:
+    invalid-name: O nome deve possuir pelo menos um sobrenome
+    invalid-email: Endereço de e-mail inválido
+    invalid-password: A senha deve possuir no mínimo 6 caracteres
+  success-send:
+    message: Cadastro enviado com sucesso! Siga as etapas no seu email para concluir o cadastro.
+    ok-button: OK
+
 feed:
   title: Connecta GB
   welcome: Olá {user}!
