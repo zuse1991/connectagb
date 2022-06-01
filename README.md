@@ -14,7 +14,7 @@ To run tests, run `flutter test` command in terminal at project folder.
 
 ## Application Sign In mock data
 
-To simulate sign in responses, type any email address, and use passwords listed above to try different responses:
+To simulate sign in responses, type any email address, and use passwords listed below to try different responses:
 * `grupoboticario`: success sign in and feed screen display
 * `invalida`: display wrong password message
 * any other: display network error message
